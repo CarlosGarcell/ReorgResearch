@@ -43,9 +43,8 @@ class PaymentRecordRepository implements PaymentRecordRepositoryInterface {
 		$arrayOfInstances = array_map(function($record) {
 			if (isset($record['name_of_third_party_entity_receiving_payment_or_transfer_of_value'])) {
 				$record['name_third_party_entity_receiving_payment_or_transfer_of_value'] = $record['name_of_third_party_entity_receiving_payment_or_transfer_of_value'];
-				unset($record['name_third_party_entity_receiving_payment_or_transfer_of_value']);
+				unset($record['name_of_third_party_entity_receiving_payment_or_transfer_of_value']);
 			}
-			Log::info($record);
 			PaymentRecord::create($record);
 			return $record;
 		}, $records);
