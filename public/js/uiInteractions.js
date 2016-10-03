@@ -13,16 +13,18 @@ $(document).ready(function() {
 	searchBoxInput.autocomplete({
 		minLength: 2,
 		source: function(request, response) {
-			$.ajax({
-				url: '/autocomplete',
-				dataType: 'json',
-				data: {
-					keyword: getTypeaheadKeyword(request.term)
-				},				
-				success: function(data) {
-					response(data)
-				}
-			});
+			if(request.term.replace(/' '/, '').length > 0) {
+				$.ajax({
+					url: '/autocomplete',
+					dataType: 'json',
+					data: {
+						keyword: getTypeaheadKeyword(request.term)
+					},				
+					success: function(data) {
+						response(data)
+					}
+				});
+			}
 		},
 		focus: function(event, ui) {
 			if (searchBoxInput.val() !== '') {
@@ -201,8 +203,20 @@ function exportData(exportToExcelButton) {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		complete: function(response) {
+			var excelFileData = JSON.parse(response.responseText);
+
 			exportToExcelButton.removeAttr('disabled');
 			exportToExcelButton.text('Export Excel');
+
+			var excelNotificationMessage = `File ${excelFileData['fileName']} was exported and stored in ${excelFileData['storagePath']}`;
+
+			var excelFileExportedDiv = $('#excelFileExported');
+
+			excelFileExportedDiv.removeClass('hidden');
+
+			excelFileExportedDiv.text(excelNotificationMessage);
+
+			excelFileExportedDiv.delay(5000).slideUp();
 		}
 	})
 }

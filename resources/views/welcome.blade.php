@@ -44,7 +44,13 @@
     	<div class="page-header text-center">
     		<h2>Reorg Research <small>Case Study (Open Payments Data 2015)</small></h2>
     	</div>
-    	<div class="text-center row">
+
+    	<!-- Exported Excel file alert -->
+    	<div class="row col-md-12">
+    		<div class="alert alert-success col-md-offset-4 hidden" role="alert" id="excelFileExported"></div>
+    	</div>
+
+    	<div class="text-center row col-md-12">
     		<!-- <button type="submit" class="btn btn-default" id="updateDatabaseButton">Update Database</button> -->
     		<button type="submit" class="btn btn-default" id="importDataButton">Import Data</button>
     		<button type="submit" class="btn btn-primary" id="searchDataButton">Search</button>

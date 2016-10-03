@@ -34,7 +34,8 @@ class SphinxIndexRepository implements SearchIndexRepositoryInterface {
 	 * @return [type]           [description]
 	 */
 	public function search($criteria = '') {
-		if ($criteria == '') return [];
+		if(!is_string($criteria)) throw new InvalidTypeException('Argument 1 must be of type string, ' . gettype($criteria) . ' given');
+		if ($criteria === '') return [];
 
 		$sphinxSearch = new SphinxSearch();
 

@@ -8,29 +8,34 @@ use Illuminate\Support\Facades\Request;
 
 use Maatwebsite\Excel\Facades\Excel;
 
-use App\Exceptions\ExcelDataTypeException;
+use App\Exceptions\InvalidTypeException;
 
-class ExcelRepository {
+use App\Contracts\ExcelRepositoryInterface;
+
+class ExcelRepository implements ExcelRepositoryInterface {
 
 	public function __construct() {
 
 	}
 
 	/**
-	 * [exportFile description]
-	 * @param  [type] $rowsData     [description]
-	 * @param  [type] $fileName 	[description]
-	 * @return [type]           	[description]
+	 * [exportFile Exports a file to XLS format based on the received data array.]
+	 * @param  [array] $rowsData     [Data arrya that contains the rows of the Excel file]
+	 * @param  [string] $fileName 	 [Name of the file to be exported]
+	 * @return [Array]           	 [Contains the storage path and the file name]
 	 */
 	public function exportFile($rowsData = [], $fileName = 'PaymentsExport') {
-		if (!is_array($rowsData)) throw new ExcelDataTypeException('Argument 1 must be of type array, ' . gettype($rowsData) . ' given');
+		if (!is_array($rowsData)) throw new InvalidTypeException('Argument 1 must be of type array, ' . gettype($rowsData) . ' given');
+		if (!is_string($fileName)) throw new InvalidTypeException('Argument 2 must be of type string, ' . gettype($fileName) . ' given');
 
-		$fileExists = true;
 		$appendCounter = 1;
 		$fullFileName = date("Y-m-d") . '_' . $fileName;
 		$filePath = storage_path('excel/exports') . '/' . $fullFileName . '.xls';
 
-		// Differentiate files by adding a number in between parenthesis at the in, as in (1)
+		/*
+		Check whether the file we're trying to export exists.
+		If it does, differentiate it by adding number to the end as in (1).
+		 */
 		while (File::exists($filePath)) {
 			$fullFileName = date("Y-m-d") . '_' . $fileName . "($appendCounter)";
 			$filePath = storage_path('excel/exports') . '/' . $fullFileName . '.xls';
@@ -38,13 +43,16 @@ class ExcelRepository {
 		}
 		
 
-		// Create excel file and store in /storage/excel/exports
+		// Store excel file in /storage/excel/exports
 		Excel::create($fullFileName, function($excel) use ($rowsData) {
 			$excel->sheet('Payments', function($sheet) use($rowsData) {
 				$sheet->fromArray($rowsData, null, 'A1', false);
 			});
 		})->store('xls', storage_path('excel/exports'));
 
-		return $filePath;
+		return [
+			'storagePath' => storage_path('excel/exports'),
+			'fileName' => $fullFileName
+		];
 	} 
 }

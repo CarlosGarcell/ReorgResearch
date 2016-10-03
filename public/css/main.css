@@ -26,3 +26,8 @@ label#searchBoxValidationMessage {
 .invalidInput {
 	border-color: red !important;
 }
+
+div#excelFileExported {
+	width: 35%;
+	/*margin-right: 31.33%;*/
+}

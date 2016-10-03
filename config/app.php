@@ -179,9 +179,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\PaymentRecordProvider::class,
-        App\Providers\RecordsApiProvider::class,
-        App\Providers\SearchIndexProvider::class
+        App\Providers\PaymentRecordServiceProvider::class,
+        App\Providers\RecordsApiServiceProvider::class,
+        App\Providers\SearchIndexServiceProvider::class,
+        App\Providers\ReorgExcelServiceProvider::class
     ],
 
     /*

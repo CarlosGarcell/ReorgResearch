@@ -10,11 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+use App\Contracts\ExcelRepositoryInterface;
 use App\Contracts\RecordsApiRepositoryInterface;
 use App\Contracts\SearchIndexRepositoryInterface;
 use App\Contracts\PaymentRecordRepositoryInterface;
-
-use App\Repositories\ExcelRepository;
 
 class RecordsController extends Controller
 {
@@ -46,7 +45,7 @@ class RecordsController extends Controller
     	RecordsApiRepositoryInterface $recordsApiRepository, 
     	SearchIndexRepositoryInterface $searchIndexRepository,
     	PaymentRecordRepositoryInterface $paymentRecordRepository,
-    	ExcelRepository $excelRepository) 
+    	ExcelRepositoryInterface $excelRepository) 
     {
     	$this->recordsApiRepository = $recordsApiRepository;
     	$this->searchIndexRepository = $searchIndexRepository;
@@ -108,9 +107,9 @@ class RecordsController extends Controller
     	$ids = array_keys(json_decode($request->matches, true));
     	$records = $this->paymentRecordRepository->fetchRecords($ids);
     	if(count($records) > 0) {
-    		print json_encode(['filePath' => $this->excelRepository->exportFile($records->toArray())]);
+    		print json_encode($this->excelRepository->exportFile($records->toArray()));
     	} else {
-    		print json_encode(['filePath' => null]);
+    		print json_encode(['storagePath' => null, 'filePath' => null]);
     	}
     }
 }

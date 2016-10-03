@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\SodaApiRepository;
 use App\Repositories\PaymentRecordRepository;
 
-class RecordsApiProvider extends ServiceProvider
+class RecordsApiServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -20,9 +20,9 @@ class RecordsApiProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Bind the RecordsApiRepositoryInterface to the App\Repositories\SodaApiRepository class.
      *
-     * @return void
+     * @return App\Repositories\SodaApiRepository
      */
     public function register()
     {

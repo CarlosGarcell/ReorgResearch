@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Repositories\ExcelRepository;
+
 use Illuminate\Support\ServiceProvider;
 
-use App\Repositories\SphinxIndexRepository;
+use App\Contracts\ExcelRepositoryInterface;
 
-class SearchIndexProvider extends ServiceProvider
+class ReorgExcelServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -25,8 +27,6 @@ class SearchIndexProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Contracts\SearchIndexRepositoryInterface', function() {
-        	return new SphinxIndexRepository(env('SEARCH_INDEX_NAME'));
-        });
+        $this->app->bind('App\Contracts\ExcelRepositoryInterface', 'App\Repositories\ExcelRepository');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class PaymentRecordProvider extends ServiceProvider
+class PaymentRecordServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -17,7 +17,7 @@ class PaymentRecordProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Bind App\Contracts\PaymentRepositoryInterface to the App\Repositories\PaymentRecordRepository class.
      *
      * @return void
      */
