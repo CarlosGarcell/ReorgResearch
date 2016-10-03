@@ -53,21 +53,33 @@ $(document).ready(function() {
 		importData($(this), searchDataButtonElement, searchBoxInput);
 	});
 
+	// Handle search submit with enter key
+	searchBoxInput.keypress(function(event) {
+		if (event.which === 13 && searchRequestIsValid(searchBoxInput)) {
+			searchData(searchDataButtonElement, exportToExcelButton)
+		}
+	})
+
 	// Handle search button interaction
 	searchDataButtonElement.click(function(event, ui) {
-		if(!(searchBoxInput.val() === '') && searchBoxInput.val().replace(/\s/g, '').length > 0) {
-			$('#searchBoxValidationMessage').addClass('hidden');
-			searchBoxInput.removeClass('invalidInput');
-			
+		if (searchRequestIsValid(searchBoxInput)) {
 			searchData(searchDataButtonElement, exportToExcelButton);
-		} else {
-			searchBoxInput.val('');
-			
-			$('#searchBoxValidationMessage').removeClass('hidden');
-			searchBoxInput.addClass('invalidInput');
 		}
 	});
 });
+
+function searchRequestIsValid(searchBoxInput) {
+	if(!(searchBoxInput.val() === '') && searchBoxInput.val().replace(/\s/g, '').length > 0) {
+		$('#searchBoxValidationMessage').addClass('hidden');
+		searchBoxInput.removeClass('invalidInput');
+		return true;
+	}
+	
+	searchBoxInput.val('');
+	$('#searchBoxValidationMessage').removeClass('hidden');
+	searchBoxInput.addClass('invalidInput');
+	return false;
+}
 
 /**
  * [getTypeaheadKeyword description]
@@ -138,8 +150,6 @@ function importData(importDataButtonElement, searchDataButtonElement, searchBoxI
 function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput) {
 	searchDataButtonElement.text('Searching...');
 	searchDataButtonElement.attr('disabled', true);
-	
-	var searchData = $('#searchBox').val();
 
 	// Clear sessionStorage before searching for something else.
 	if (sessionStorage.getItem('excelData')) sessionStorage.removeItem('excelData');
@@ -148,7 +158,7 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 		type: 'GET',
 		url: '/search',
 		data: {
-			searchData : searchData
+			searchData : $('#searchBox').val()
 		},
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
