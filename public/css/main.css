@@ -1,0 +1,28 @@
+/*@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);*/
+
+body {
+	background-color: #fff;
+}
+
+.page-header h2 {
+	font-family: 'Raleway';
+}
+
+div.recordCountDiv p {
+	font-family: 'Raleway';
+}
+
+input#searchBox {
+	margin-top: 15px;
+	width: 35%;
+}
+
+label#searchBoxValidationMessage {
+	color: red;
+	margin-top: 10px;
+	font-weight: 400;
+}
+
+.invalidInput {
+	border-color: red !important;
+}
