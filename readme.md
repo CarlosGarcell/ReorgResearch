@@ -2,9 +2,9 @@
 
 On this file you will be able to find the instructions as to how to setup the application.
 
-We're assuming you have already installed Composer, Vagrant and VirtualBox, so we're skipping straight to setting up the app.
-
-In case you haven't you won't be able to proceed with the installation!!
+Please, before executing any of the .sh (bash) files, make sure you meet the minimum requirements for the project, otherwise, you won't be able to run it.
+In case you ran the initApp.sh file and your system did not meet the minimum requirements, make sure to destroy your vagrant machine (you can find its id by issuing the vagrant global-status command and looking for the machine named reorgresearch), 
+completely remove your folder from your system and clone the project again.
 
 Minimum Requirements:
 - PHP v5.6.4 (anything lower than this version will not allow Laravel 5.3 to be installed)
