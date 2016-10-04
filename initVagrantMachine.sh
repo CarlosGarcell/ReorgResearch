@@ -85,7 +85,7 @@ cd /var/run ; sudo chmod -R 777 sphinxsearch
 ## Adding DB parameters tp SphinxSearch.php
 ## ------------------------------------------
 echo '--------------------------------------------------'
-echo '*** Adding DB parameters tp SphinxSearch.php ***'
+echo '*** Adding DB parameters to SphinxSearch.php ***'
 echo '--------------------------------------------------'
 sudo sed -i "s/\Config::get('sphinxsearch.mysql_server.host'), '', '',/\Config::get('sphinxsearch.mysql_server.host'), env('DB_USERNAME'), env('DB_PASSWORD'),/g" /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch/SphinxSearch.php
 

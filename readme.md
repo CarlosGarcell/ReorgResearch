@@ -6,12 +6,17 @@ We're assuming you have already installed Composer, Vagrant and VirtualBox, so w
 
 In case you haven't you won't be able to proceed the installation!!
 
-Please refer to the following sites on how to install each one of teh techonologies mentioned above.
+Minimum Requirements:
+- PHP v5.6.4 (anything lower than this version will not allow Laravel 5.3 to be installed)
+- Vagrant v1.8.6 (Latest released version)
+- VirtualBox v4.3.36
+- Composer 1.2.1
 
-- Composer: https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
+Please refer to the following sites on how to install each one of teh techonologies mentioned above.
+- Update PHP to v7.0: curl -s http://php-osx.liip.ch/install.sh | bash -s 7.0
 - Vagrant: https://www.vagrantup.com/downloads.html
 - VirtualBox: https://www.virtualbox.org/wiki/Downloads
-- PHP v5.6.4 (anything lower than this version will not allow Laravel 5.3 to be installed). Command to update PHP to v7.0: curl -s http://php-osx.liip.ch/install.sh | bash -s 7.0
+- Composer: https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
 
 1. Clone the repository into your local machine via 'git clone https://github.com/CarlosGarcell/ReorgResearch.git'
 2. Once the repository has been cloned, 'cd' into the folder (it should be ReorgResearch) and execute 'sh initApp.sh' to begin the bootstrapping process.

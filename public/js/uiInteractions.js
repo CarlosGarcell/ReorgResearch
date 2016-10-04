@@ -70,6 +70,13 @@ $(document).ready(function() {
 	});
 });
 
+/**
+ * [searchRequestIsValid 
+ * Checks whether the current request made by the user is a valid one]
+ * 
+ * @param  {[HTML Element]} searchBoxInput 
+ * @return {[boolean]}             [Indicates whether the request was valid or not]
+ */
 function searchRequestIsValid(searchBoxInput) {
 	if(!(searchBoxInput.val() === '') && searchBoxInput.val().replace(/\s/g, '').length > 0) {
 		$('#searchBoxValidationMessage').addClass('hidden');
@@ -77,6 +84,7 @@ function searchRequestIsValid(searchBoxInput) {
 		return true;
 	}
 	
+	// Request is invalid
 	searchBoxInput.val('');
 	$('#searchBoxValidationMessage').removeClass('hidden');
 	searchBoxInput.addClass('invalidInput');
@@ -84,9 +92,12 @@ function searchRequestIsValid(searchBoxInput) {
 }
 
 /**
- * [getTypeaheadKeyword description]
- * @param  {[type]} string [description]
- * @return {[type]}        [description]
+ * [getTypeaheadKeyword 
+ * Extracts the keyword from which we should offer suggestions to the user]
+ * 
+ * @param  {[string]} string [The current value of the search input]
+ * @return {[string]}        [The string to be searched in the DB for suggestions]
+ * 
  */
 function getTypeaheadKeyword(string) {
 	var stringArray = string.split(' ');
@@ -95,10 +106,14 @@ function getTypeaheadKeyword(string) {
 }
 
 /**
- * [importData description]
- * @param  {[type]} importDataButtonElement   [description]
- * @param  {[type]} fetchRecordsButtonElement [description]
- * @return {[type]}                           [description]
+ * [importData 
+ * Sends an AJAX request to the backend to pull records from the API
+ * The max amount of records to be pulled has been set to 3000 for permonce reasons]
+ * 
+ * @param  {[HTML Element]} importDataButtonElement 
+ * @param  {[HTML Element]} searchDataButtonElement 
+ * @param  {[HTML Element]} searchBoxInput          
+ * 
  */
 function importData(importDataButtonElement, searchDataButtonElement, searchBoxInput) {
 	// Disable 'Import Data' button while data is being fetched from API
@@ -118,15 +133,13 @@ function importData(importDataButtonElement, searchDataButtonElement, searchBoxI
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		timeout: 540000,
-		error: function() {
-
+		error: function(response) {
+			alert(error)
 		}
 	}).done(function(data) {
 		var jsonData = JSON.parse(data);
 
-		if (jsonData.savedRecordsCount === 0) {
-			alert('No records were downloaded from the server')
-		}
+		if (jsonData.savedRecordsCount === 0) alert('No records were downloaded from the server');
 
 		// Enable Import data button
 		importDataButtonElement.text('Import Data');
@@ -145,9 +158,15 @@ function importData(importDataButtonElement, searchDataButtonElement, searchBoxI
 }
 
 /**
- * [searchData description]
- * @param  {[type]} searchDataButtonElement [description]
- * @return {[type]}                         [description]
+ * [searchData 
+ * Sends an AJAX request to the backend requesting any matching records
+ * Once the request recieves a response, it will enable the 'Export Excel' button
+ * or alert the user that no records were found in the DB based on the current criteria]
+ * 
+ * @param  {[HTML Element]} searchDataButtonElement
+ * @param  {[HTML Element]} exportToExcelButton
+ * @param  {[HTML Element]} searchBoxInput
+ * 
  */
 function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput) {
 	searchDataButtonElement.text('Searching...');
@@ -172,9 +191,26 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 		searchDataButtonElement.text('Search');
 		searchDataButtonElement.removeAttr('disabled');
 
+		var totalRecords = jsonData.total;
+		var totalFoundRecords = jsonData.total_found;
+
+		console.log(totalRecords)
+
 		// Enable "Export Excel" button.
-		if (jsonData.total_found > 0)  {
-			exportToExcelButton.removeClass('hidden')
+		if (totalFoundRecords > 0)  {
+			var foundRecordsAlertElement = $('#foundRecordsAlert');
+			if(totalRecords == 1000) {
+				var foundRecordsAlertNotification = `Total Found: ${jsonData['total_found']} - Records to Export: ${jsonData['total']}. 
+				(We only export the top 1000 records due to performance reasons)`;
+			} else if(totalRecords < 1000) {
+				var foundRecordsAlertNotification = `Total Found: ${jsonData['total_found']} - Records to Export: ${jsonData['total']}`
+			}
+
+			console.log(foundRecordsAlertNotification)
+
+			exportToExcelButton.removeClass('hidden');
+			foundRecordsAlertElement.removeClass('hidden');
+			foundRecordsAlertElement.text(foundRecordsAlertNotification);
 		} else {
 			alert('No records were found!')
 			exportToExcelButton.addClass('hidden');
@@ -185,9 +221,9 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 }
 
 /**
- * [exportData description]
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
+ * [exportData Sends an AJAX request to the backend to build and export the Excel file]
+ * 
+ * @param  {[HTML element]} exportToExcelButton
  */
 function exportData(exportToExcelButton) {
 	exportToExcelButton.attr('disabled', true);
@@ -204,6 +240,9 @@ function exportData(exportToExcelButton) {
 		},
 		complete: function(response) {
 			var excelFileData = JSON.parse(response.responseText);
+
+			// Hide foundRecordAlertElement as it is no longer needed
+			$('#foundRecordsAlert').addClass('hidden');
 
 			exportToExcelButton.removeAttr('disabled');
 			exportToExcelButton.text('Export Excel');

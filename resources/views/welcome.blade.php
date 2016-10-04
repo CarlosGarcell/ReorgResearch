@@ -47,7 +47,7 @@
 
     	<!-- Exported Excel file alert -->
     	<div class="row col-md-12">
-    		<div class="alert alert-success col-md-offset-4 hidden" role="alert" id="excelFileExported"></div>
+    		<div class="alert alert-success col-md-offset-4 hidden recordAlerts" role="alert" id="excelFileExported"></div>
     	</div>
 
     	<div class="text-center row col-md-12">
@@ -59,13 +59,15 @@
     		<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#importOptionsModal">Open Modal</button> -->
     	</div>
 
-    	<!-- Import modal for establishing import options -->
-    	@include('partials.importoptions')
-
     	<!-- Search input box -->
     	<div class="row text-center col-md-12">
     		<input type="search" name="searchBox" id="searchBox" class="form form-control col-md-offset-4" placeholder="Search..." />
     		<label class="hidden" id="searchBoxValidationMessage">Search box cannot be empty</label>
+    	</div>
+
+    	<!-- Found records notification -->
+    	<div class="row col-md-12">
+    		<div class="alert alert-warning col-md-offset-4 hidden recordAlerts text-center" role="alert" id="foundRecordsAlert"></div>
     	</div>
 
     	<!-- Indicate current number of records -->
