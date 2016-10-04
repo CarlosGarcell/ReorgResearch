@@ -116,9 +116,10 @@ class RecordsController extends Controller
      * @return [Response]           [A response that downloads a file if it was generated, otherwise, redirects to the main view]
      */
     public function downloadFile(Request $request) {
-    	if(!is_array($request->matches)) throw new InvalidTypeException('Request parameter must be a json string, ' . gettype($request->matches) . ' given');
+    	$matches = json_decode($request->matches, true);
+    	if(!is_array($matches)) throw new InvalidTypeException("Decoded 'matches' parameter must be an array, decoding result type " . gettype($matches));
 
-    	$ids = array_keys(json_decode($request->matches, true));
+    	$ids = array_keys($matches);
     	$records = $this->paymentRecordRepository->fetchRecords($ids);
     	if(count($records) > 0) {
     		$exportFileResult = $this->excelRepository->exportFile($records->toArray());
