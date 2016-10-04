@@ -19,7 +19,7 @@ Please refer to the following sites on how to install each one of teh techonolog
 
 NOTE: If you do not wish to use the app via localhost:8000, follow through the following steps:
 
-a. Go into the cloned git repository and open the Homestead.yaml file. Write down the IP Address at the very top of the file.
-b. Edit you /etc/hosts file and add the following: IP_FROM_HOMESTEAD_FILE reorgresearch.app. Save it!
-c. Provision your vagrant machine by issuing the 'vagrant provision' command from within the repo folder. Once done, go to your browser, type reorgresearch.app and you should be able to see the intial screen.
-d. If the previous step didn't work, stop your vagrant machine (by issuing the 'vagran halt' commmand) and restart it again (by issuing the 'vagrant up' command).
+1. Go into the cloned git repository and open the Homestead.yaml file. Write down the IP Address at the very top of the file.
+2. Edit you /etc/hosts file and add the following: IP_FROM_HOMESTEAD_FILE reorgresearch.app. Save it!
+3. Provision your vagrant machine by issuing the 'vagrant provision' command from within the repo folder. Once done, go to your browser, type reorgresearch.app and you should be able to see the intial screen.
+4. If the previous step didn't work, stop your vagrant machine (by issuing the 'vagran halt' commmand) and restart it again (by issuing the 'vagrant up' command).
