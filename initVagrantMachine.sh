@@ -86,7 +86,7 @@ cd /var/run ; sudo chmod -R 777 sphinxsearch
 echo '----------------------------------------------------------------------------------------------------------------'
 echo '*** Modifying permissions for /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch ***'
 echo '----------------------------------------------------------------------------------------------------------------'
-cd /home/vagrant/reorgresearch/vagrant/sngrl/sphinxsearch/src/sngrl ; sudo chmod -R 777 SphinxSearch/
+cd /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl ; sudo chmod -R 777 SphinxSearch/
 
 
 ## ------------------------------------------
