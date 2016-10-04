@@ -194,8 +194,6 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 		var totalRecords = jsonData.total;
 		var totalFoundRecords = jsonData.total_found;
 
-		console.log(totalRecords)
-
 		// Enable "Export Excel" button.
 		if (totalFoundRecords > 0)  {
 			var foundRecordsAlertElement = $('#foundRecordsAlert');
@@ -205,8 +203,6 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 			} else if(totalRecords < 1000) {
 				var foundRecordsAlertNotification = `Total Found: ${jsonData['total_found']} - Records to Export: ${jsonData['total']}`
 			}
-
-			console.log(foundRecordsAlertNotification)
 
 			exportToExcelButton.removeClass('hidden');
 			foundRecordsAlertElement.removeClass('hidden');
@@ -251,7 +247,15 @@ function exportData(exportToExcelButton) {
 
 			var excelFileExportedDiv = $('#excelFileExported');
 
-			excelFileExportedDiv.removeClass('hidden');
+			var styleAttribute = excelFileExportedDiv.attr('style');
+
+			// On slideUp, jQuery adds 'style=display: none;' to the element, thus rendering it invisible for the rest
+			// of the current execution. This is a simple workaraound that to allow the alert to be shown repeatedly.
+			if (!styleAttribute) {
+				excelFileExportedDiv.removeClass('hidden');
+			} else {
+				excelFileExportedDiv.removeAttr('style');
+			}
 
 			excelFileExportedDiv.text(excelNotificationMessage);
 
