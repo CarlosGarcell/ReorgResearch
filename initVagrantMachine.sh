@@ -80,6 +80,14 @@ echo '*** Modifying permissions for /var/run/sphinxsearch ***'
 echo '-------------------------------------------------------'
 cd /var/run ; sudo chmod -R 777 sphinxsearch
 
+## -------------------------------------------------------------------------------------------------------
+## Modifying permissions for /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch
+## -------------------------------------------------------------------------------------------------------
+echo '----------------------------------------------------------------------------------------------------------------'
+echo '*** Modifying permissions for /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch ***'
+echo '----------------------------------------------------------------------------------------------------------------'
+cd /home/vagrant/reorgresearch/vagrant/sngrl/sphinxsearch/src/sngrl ; sudo chmod -R 777 SphinxSearch
+
 
 ## ------------------------------------------
 ## Adding DB parameters tp SphinxSearch.php

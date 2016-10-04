@@ -4,7 +4,7 @@ On this file you will be able to find the instructions as to how to setup the ap
 
 We're assuming you have already installed Composer, Vagrant and VirtualBox, so we're skipping straight to setting up the app.
 
-In case you haven't you won't be able to proceed the installation!!
+In case you haven't you won't be able to proceed with the installation!!
 
 Minimum Requirements:
 - PHP v5.6.4 (anything lower than this version will not allow Laravel 5.3 to be installed)
@@ -45,3 +45,8 @@ An internal algorithm will sort and rank them to return the ones that match your
 
 Once a search request has matched at least one record, an 'Export Excel' button will be enabled for you to export the results.
 These results will be exported to the storage/excel/exports directory inside your app. They will be exported in XLS format. (Everytime you search, the dataset to export will change)
+
+Known (possible) issues:
+1. If you get an sed error after the prompt * Adding DB parameters tp SphinxSearch.php *, or a "mysqli connection error for user ''@'localhost'" attempt to modify the file by moving into the folder /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch;
+once inside the folder, issue the command sudo nano SphinxSearch.php and modify the following line mysqli_connect(\Config::get('sphinxsearch.mysql_server.host'), '', '', '', \Config::get('sphinxsearch.mysql_server.port')) for mysqli_connect(\Config::get('sphinxsearch.mysql_server.host'), env('DB_USERNAME'), env('DB_PASSWORD'), '', \Config::get('sphinxsearch.mysql_server.port'));
+This should allow you to connect to mysql and return to using the app as normal.
