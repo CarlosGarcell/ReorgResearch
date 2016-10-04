@@ -40,11 +40,11 @@ Since there will be no records inside the DB, if you try to search, you will get
 The 'Import Data' button, as its name suggest, will import data into the database (in this case, from the Open Payments System API). 
 In this case, we're hard setting the app to download 3000 records per request.
 
-The 'Search' button will perform a search agains the database and return up to a thousand (1000) records that match the words you've searched for.
+The 'Search' button will perform a search agains the database and return up to a thousand (1000) records that match your search criteria.
 An internal algorithm will sort and rank them to return the ones that match your search criteria the closest.
 
-Once a search request has matched at least one record, an 'Export Excel' button will be enabled for you to export the results.
-These results will be exported to the storage/excel/exports directory inside your app. They will be exported in XLS format. (Everytime you search, the dataset to export will change)
+Once a search request has matched at least one record, a 'Download Excel' button will be enabled for you to download the results.
+These results will be exported to the storage/excel/exports directory inside your app and downloaded to the default download folder set in your browser. They will be exported in XLS format. (Everytime you search, the dataset to export will change)
 
 Known (possible) issues:
 1. If you get an sed error after the prompt * Adding DB parameters tp SphinxSearch.php *, or a "mysqli connection error for user ''@'localhost'" attempt to modify the file by moving into the folder /home/vagrant/reorgresearch/vendor/sngrl/sphinxsearch/src/sngrl/SphinxSearch;
