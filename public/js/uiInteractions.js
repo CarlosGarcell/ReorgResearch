@@ -8,6 +8,9 @@ $(document).ready(function() {
 	var searchDataButtonElement = $('#searchDataButton');
 	var exportToExcelButton = $('#exportToExcelButton');
 
+	// Hide noRecordsFoundAlert
+	$('#noRecordsFoundAlert').delay(5000).slideUp();
+
 	searchBoxInput.focus();
 
 	searchBoxInput.autocomplete({
@@ -193,10 +196,10 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 
 		var totalRecords = jsonData.total;
 		var totalFoundRecords = jsonData.total_found;
+		var foundRecordsAlertElement = $('#foundRecordsAlert');
 
 		// Enable "Export Excel" button.
 		if (totalFoundRecords > 0)  {
-			var foundRecordsAlertElement = $('#foundRecordsAlert');
 			if(totalRecords == 1000) {
 				var foundRecordsAlertNotification = `Total Found: ${jsonData['total_found']} - Records to Export: ${jsonData['total']}. 
 				(We only export the top 1000 records due to performance reasons)`;
@@ -204,15 +207,19 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
 				var foundRecordsAlertNotification = `Total Found: ${jsonData['total_found']} - Records to Export: ${jsonData['total']}`
 			}
 
-			exportToExcelButton.removeClass('hidden');
-			foundRecordsAlertElement.removeClass('hidden');
+			if (foundRecordsAlertElement.attr('style')) {
+				foundRecordsAlertElement.removeAttr('style');
+			} else {
+				exportToExcelButton.removeClass('hidden');
+				foundRecordsAlertElement.removeClass('hidden');
+			}
 			foundRecordsAlertElement.text(foundRecordsAlertNotification);
+			sessionStorage.setItem('excelData', JSON.stringify(jsonData.matches));
 		} else {
 			alert('No records were found!')
 			exportToExcelButton.addClass('hidden');
+			sessionStorage.removeItem('excelData');
 		}
-
-		sessionStorage.setItem('excelData', JSON.stringify(jsonData.matches));
 	})
 }
 
@@ -222,44 +229,8 @@ function searchData(searchDataButtonElement, exportToExcelButton, searchBoxInput
  * @param  {[HTML element]} exportToExcelButton
  */
 function exportData(exportToExcelButton) {
-	exportToExcelButton.attr('disabled', true);
-	exportToExcelButton.text('Exporting...');
+	$('#matchesInput').val(sessionStorage.getItem('excelData'))
+	$('#buildFileForm').submit();
 
-	$.ajax({
-		type: 'POST',
-		url: `/buildfile`,
-		data: {
-			matches: sessionStorage.getItem('excelData')
-		},
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		},
-		complete: function(response) {
-			var excelFileData = JSON.parse(response.responseText);
-
-			// Hide foundRecordAlertElement as it is no longer needed
-			$('#foundRecordsAlert').addClass('hidden');
-
-			exportToExcelButton.removeAttr('disabled');
-			exportToExcelButton.text('Export Excel');
-
-			var excelNotificationMessage = `File ${excelFileData['fileName']} was exported and stored in ${excelFileData['storagePath']}`;
-
-			var excelFileExportedDiv = $('#excelFileExported');
-
-			var styleAttribute = excelFileExportedDiv.attr('style');
-
-			// On slideUp, jQuery adds 'style=display: none;' to the element, thus rendering it invisible for the rest
-			// of the current execution. This is a simple workaraound that to allow the alert to be shown repeatedly.
-			if (!styleAttribute) {
-				excelFileExportedDiv.removeClass('hidden');
-			} else {
-				excelFileExportedDiv.removeAttr('style');
-			}
-
-			excelFileExportedDiv.text(excelNotificationMessage);
-
-			excelFileExportedDiv.delay(5000).slideUp();
-		}
-	})
+	$('#foundRecordsAlert').delay(4000).slideUp()
 }

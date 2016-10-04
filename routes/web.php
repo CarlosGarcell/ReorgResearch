@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', ['middleware' => 'guest', 'uses' => 'RecordsController@index']);
+Route::get('/autocomplete', ['middleware' => 'guest', 'uses' => 'RecordsController@autocomplete']);
 Route::get('/search', ['middleware' => 'guest', 'uses' => 'RecordsController@search']);
 Route::post('/import', ['middleware' => 'guest', 'uses' => 'RecordsController@import']);
-Route::post('/buildfile', ['middleware' => 'guest', 'uses' => 'RecordsController@buildExportFile']);
-Route::get('/autocomplete', ['middleware' => 'guest', 'uses' => 'RecordsController@autocomplete']);
+Route::post('/download', ['middleware' => 'guest', 'uses' => 'RecordsController@downloadFile']);

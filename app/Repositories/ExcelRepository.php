@@ -44,15 +44,10 @@ class ExcelRepository implements ExcelRepositoryInterface {
 		
 
 		// Store excel file in /storage/excel/exports
-		Excel::create($fullFileName, function($excel) use ($rowsData) {
+		return Excel::create($fullFileName, function($excel) use ($rowsData) {
 			$excel->sheet('Payments', function($sheet) use($rowsData) {
 				$sheet->fromArray($rowsData, null, 'A1', false);
 			});
 		})->store('xls', storage_path('excel/exports'));
-
-		return [
-			'storagePath' => storage_path('excel/exports'),
-			'fileName' => $fullFileName
-		];
 	} 
 }

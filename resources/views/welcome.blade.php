@@ -50,11 +50,22 @@
     		<div class="alert alert-success col-md-offset-4 hidden recordAlerts" role="alert" id="excelFileExported"></div>
     	</div>
 
+    	<!-- Error message -->
+    	@if (isset($noRecordsFoundMessage))
+	    	<div class="row col-md-12">
+	    		<div class="alert alert-danger col-md-offset-4 recordAlerts" role="alert" id="noRecordsFoundAlert">{{ $noRecordsFoundMessage }}</div>
+	    	</div>
+	    @endif
+
     	<div class="text-center row col-md-12">
     		<!-- <button type="submit" class="btn btn-default" id="updateDatabaseButton">Update Database</button> -->
-    		<button type="submit" class="btn btn-default" id="importDataButton">Import Data</button>
-    		<button type="submit" class="btn btn-primary" id="searchDataButton">Search</button>
-    		<button type="submit" class="btn btn-success hidden" id="exportToExcelButton">Export Excel</button>
+    		<form method="POST" action="/download" name="buildFileForm" id="buildFileForm">
+    			{{ csrf_field() }}
+	    		<button type="submit" class="btn btn-default" id="importDataButton">Import Data</button>
+	    		<button type="submit" class="btn btn-primary" id="searchDataButton">Search</button>
+    			<a class="btn btn-success hidden" id="exportToExcelButton">Export Excel</a>
+    			<input type="hidden" name="matches" value="" id="matchesInput">
+    		</form>
 
     		<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#importOptionsModal">Open Modal</button> -->
     	</div>
