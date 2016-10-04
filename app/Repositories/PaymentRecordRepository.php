@@ -73,9 +73,9 @@ class PaymentRecordRepository implements PaymentRecordRepositoryInterface {
 	}
 
 	/**
-	 * [fetchRecords description]
-	 * @param  [type] $recordIds [description]
-	 * @return [type]            [description]
+	 * [fetchRecords Returns a Collection that contains all records that matched the ids]
+	 * @param  [Array] $recordIds 	   [Array of record ids to search in the DB]
+	 * @return [Collection]            [Collection of all records that matched the record ids]
 	 */
 	public function fetchRecords($recordIds = []) {
 		if(!is_array($recordIds)) throw new InvalidTypeException('Argument 1 must be of type array, ' . gettype($recordIds) . ' given');
@@ -83,14 +83,5 @@ class PaymentRecordRepository implements PaymentRecordRepositoryInterface {
 		if(count($recordIds) === 0) return [];
 
 		return PaymentRecord::find($recordIds);
-	}
-
-	/**
-	 * [searchRecordById description]
-	 * @param  [type] $recordId [description]
-	 * @return [type]           [description]
-	 */
-	public function fetchRecordById($recordId) {
-		
 	}
 }

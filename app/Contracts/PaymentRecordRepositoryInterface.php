@@ -7,5 +7,4 @@ interface PaymentRecordRepositoryInterface {
 	public function getRecordCount();
 	public function saveRecords($records);
 	public function fetchRecords($recordIds);
-	public function fetchRecordById($recordId);
 }

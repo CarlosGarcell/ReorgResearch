@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Artisan;
 
 use sngrl\SphinxSearch\SphinxSearch;
 
+use App\Exceptions\InvalidTypeException;
+
 use App\Contracts\SearchIndexRepositoryInterface;
 
 class SphinxIndexRepository implements SearchIndexRepositoryInterface {
@@ -17,12 +19,6 @@ class SphinxIndexRepository implements SearchIndexRepositoryInterface {
 	 * @var [type]
 	 */
 	protected $sphinxIndexInstance;
-
-	/**
-	 * [$indexName description]
-	 * @var [type]
-	 */
-	protected $indexName;
 
 	public function __construct() {
 		$this->sphinxIndexInstance = new SphinxSearch();
@@ -52,6 +48,7 @@ class SphinxIndexRepository implements SearchIndexRepositoryInterface {
 	 * @return [type]          [description]
 	 */
 	public function autocomplete($keyword = '') {
+		if(!is_string($keyword)) throw new InvalidTypeException('Argument 1 must be of type string, ' . gettype($keyword) . ' given');
 		if ($keyword === '') return [];
 
 		$sphinxSearch = new SphinxSearch();
@@ -78,16 +75,14 @@ class SphinxIndexRepository implements SearchIndexRepositoryInterface {
 	}
 
 	/**
-	 * [indexDataset description]
-	 * @return [type] [description]
+	 * [indexDataset Regenerates the dataset index by calling an Artisan command. Logs the info to laravel.log]
 	 */
 	public function indexDataset() {
 		Log::info('Datset Indexing Result = ' . Artisan::call('index:dataset'));
 	}
 
 	/**
-	 * [generateKeywordSuggestions description]
-	 * @return [type] [description]
+	 * [generateKeywordSuggestions Generates the keywords map that will be used for the autocomplete suggestions. Logs the info to laravel.log]
 	 */
 	public function generateKeywordSuggestions() {
 		Log::info('Keyword Generation Process Result = ' . Artisan::call('generate:keywords_dictionary'));

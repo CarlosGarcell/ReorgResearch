@@ -20,7 +20,7 @@ class ExcelRepository implements ExcelRepositoryInterface {
 
 	/**
 	 * [exportFile Exports a file to XLS format based on the received data array.]
-	 * @param  [array] $rowsData     [Data arrya that contains the rows of the Excel file]
+	 * @param  [array] $rowsData     [Data array that contains the rows of the Excel file]
 	 * @param  [string] $fileName 	 [Name of the file to be exported]
 	 * @return [Array]           	 [Contains the storage path and the file name]
 	 */
