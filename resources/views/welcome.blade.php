@@ -63,7 +63,7 @@
     			{{ csrf_field() }}
 	    		<button type="submit" class="btn btn-default" id="importDataButton">Import Data</button>
 	    		<button type="submit" class="btn btn-primary" id="searchDataButton">Search</button>
-    			<a class="btn btn-success hidden" id="exportToExcelButton">Export Excel</a>
+    			<a class="btn btn-success hidden" id="exportToExcelButton">Download Excel</a>
     			<input type="hidden" name="matches" value="" id="matchesInput">
     		</form>
 
