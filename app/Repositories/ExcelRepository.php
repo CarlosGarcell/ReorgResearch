@@ -22,7 +22,7 @@ class ExcelRepository implements ExcelRepositoryInterface {
 	 * [exportFile Exports a file to XLS format based on the received data array.]
 	 * @param  [array] $rowsData     [Data array that contains the rows of the Excel file]
 	 * @param  [string] $fileName 	 [Name of the file to be exported]
-	 * @return [Array]           	 [Contains the storage path and the file name]
+	 * @return [Excel FileWriter]    [Object that contains all the data related to the recently created file]
 	 */
 	public function exportFile($rowsData = [], $fileName = 'PaymentsExport') {
 		if (!is_array($rowsData)) throw new InvalidTypeException('Argument 1 must be of type array, ' . gettype($rowsData) . ' given');
